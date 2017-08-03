@@ -1,2 +1,5 @@
 ﻿  I-WordOfWarcraft.cpp
-d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(71): error C4716: “knight::attack”: 必须返回一个值
+d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(210): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(247): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(345): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(348): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
