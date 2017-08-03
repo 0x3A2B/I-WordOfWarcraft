@@ -4,9 +4,6 @@
 
 using namespace std;
 
-
-
-
 //WYC Part Start
 class knight {
 public:
@@ -31,15 +28,16 @@ public:
 
 knight *knights[3][20] = { 0 };
 city   *citys[20] = { 0 };
-command *red_c = new command(1, 0), *blue_c = new command(2, 0);  //silingbu
+command *citys[0] = new command(1, 0), *citys[city_n+1] = new command(2, 0);  //silingbu
 int city_n = 0, TIME = 0, time = 0;
 int HEA_init[5] = { 0 }, ATK_init[5] = { 0 };
 
 knight::knight(int n, int t) {
 	NO = n;
 	type = t;
-	HEA = HEA_init[n - 1];
-	ATK = ATK_init[n - 1];
+	HEA = HEA_init[t - 1];
+	ATK = ATK_init[t - 1];
+	step = 0;
 }
 
 int knight::attack(int n, int RorB) {
@@ -54,8 +52,8 @@ int knight::attack(int n, int RorB) {
 void init() {
 	int M = 0;
 	cin >> M >> city_n >> TIME;
-	red_c->HEA = M;
-	blue_c->HEA = M;
+	citys[0]->HEA = M;
+	citys[city_n+1]->HEA = M;
 	for (int i = 0; i < 5; i++) cin >> HEA_init[i];
 	for (int i = 0; i < 5; i++) cin >> ATK_init[i];
 }
@@ -70,7 +68,7 @@ int red_list[5] = { 1,2,3,4,5 }, blue_list[5] = { 2,5,4,1,3 };
 
 void print(int mode, int city_no, int elements, \
 	int kinght_type_1, int commond_type_1, int kinght_no_1, int elements_1, int force_1, \
-	int kinght_type_2, int commond_type_2, int kinght_no_2, int elements_2, int force_2);
+	int kinght_type_2, int commond_type_2, int kinght_no_2, int elements_2, int force_2 );
 void procress();
 int main() {
 	cout << "Hello world!" << endl;
@@ -86,7 +84,7 @@ int main() {
 }
 void print(int mode, int city_no, int elements, \
 	int kinght_type_1, int commond_type_1, int kinght_no_1, int elements_1, int force_1, \
-	int kinght_type_2, int commond_type_2, int kinght_no_2, int elements_2, int force_2) {
+	int kinght_type_2, int commond_type_2, int kinght_no_2, int elements_2, int force_2 ) {
 	char kinght[6][10] = { { " " },{ "dragon" },{ "ninja" },{ "iceman" },{ "lion" },{ "wolf" } };
 	char commond[3][6] = { { " " },{ "red" },{ "blue" } };
 
@@ -151,23 +149,21 @@ void procress()
 	int sum_kinght = 0;
 	init();
 	//t = 0 ;
-	while (red_c->people < 2 && blue_c->people < 2) {
+	while (citys[0]->people < 2 && citys[city_n+1]->people < 2) {
 		//t = 0
-		if (red_c->HEA > HEA_init[red_list[time % 5] - 1]) {
+		if (citys[0]->HEA > HEA_init[red_list[time % 5] - 1]) {
 			knights[1][sum_kinght] = new knight(sum_kinght + 1, red_list[time % 5]);     //red bron
-			red_c->HEA -= HEA_init[red_list[time % 5] - 1];
-			knights[1][sum_kinght]->ATK = ATK_init[red_list[time % 5] - 1];
-			knights[1][sum_kinght]->HEA = HEA_init[red_list[time % 5] - 1];
-			knights[1][sum_kinght]->step = 0;
-			print(1, NULL, NULL, red_list[time % 5], 1, sum_kinght + 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+			citys[0]->HEA -= HEA_init[red_list[time % 5] - 1];
+			print(1, NULL, NULL, \
+				  red_list[time % 5], 1, sum_kinght + 1, NULL, \
+				  NULL, NULL, NULL, NULL, NULL, NULL );
 		}
-		if (blue_c->HEA > HEA_init[blue_list[time % 5] - 1]) {
+		if (citys[city_n+1]->HEA > HEA_init[blue_list[time % 5] - 1]) {
 			knights[2][sum_kinght] = new knight(sum_kinght + 1, blue_list[time % 5]);     //blue bron
-			blue_c->HEA -= HEA_init[blue_list[time % 5] - 1];
-			knights[2][sum_kinght]->ATK = ATK_init[blue_list[time % 5] - 1];
-			knights[2][sum_kinght]->HEA = HEA_init[blue_list[time % 5] - 1];
-			knights[2][sum_kinght]->step = 0;
-			print(1, NULL, NULL, blue_list[time % 5], 2, sum_kinght + 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+			citys[city_n+1]->HEA -= HEA_init[blue_list[time % 5] - 1];
+			print(1, NULL, NULL, \
+				  blue_list[time % 5], 2, sum_kinght + 1, NULL, \
+				  NULL, NULL, NULL, NULL, NULL, NULL );
 		}
 		time++;
 		//t = 1
@@ -176,16 +172,20 @@ void procress()
 				citys[knights[1][i]->step]->people--;
 				knights[1][i]->step++;
 				citys[knights[1][i]->step]->people++;
-				print(2, knights[1][i]->step, NULL, knights[1][i]->type, 1, knights[1][i]->NO, knights[1][i]->HEA, knights[1][i]->ATK, NULL, NULL, NULL, NULL, NULL);
+				print(2, knights[1][i]->step, NULL, \
+					  knights[1][i]->type, 1, knights[1][i]->NO, knights[1][i]->HEA, knights[1][i]->ATK,\
+					  NULL, NULL, NULL, NULL, NULL );
 			}
 			if (knights[2][i]->dead) {
 				citys[knights[2][i]->step]->people--;
 				knights[2][i]->step--;
 				citys[knights[1][i]->step]->people++;
-				print(2, knights[2][i]->step, NULL, knights[2][i]->type, 1, knights[2][i]->NO, knights[2][i]->HEA, knights[2][i]->ATK, NULL, NULL, NULL, NULL, NULL);
+				print(2, knights[2][i]->step, NULL,\
+					  knights[2][i]->type, 1, knights[2][i]->NO, knights[2][i]->HEA, knights[2][i]->ATK, \
+					  NULL, NULL, NULL, NULL, NULL );
 			}
 		}
-		time++;
+		time++; 
 		//t = 2
 
 
