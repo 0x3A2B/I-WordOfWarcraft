@@ -4,7 +4,7 @@
  :)
  ****************************/
 
-//#include"stdafx.h"
+#include"stdafx.h"
 #include <iostream>
 #include <stdio.h>
 
@@ -36,8 +36,8 @@ public:
     }
 };
 
-knight *knights[3][30] = {0};
-city   *citys[30] = {0};
+knight *knights[3][100] = {0};
+city   *citys[100] = {0};
 int city_n = 0, TIME = 0, time = 0;
 int HEA_init[7] = {0}, ATK_init[7] = {0};
 
@@ -149,9 +149,9 @@ void Init() {
     //knights[3][20] = {0};
     //citys[20] = {0};
     for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 30; j++) knights[i][j] = NULL;
+        for (int j = 0; j < 100; j++) knights[i][j] = NULL;
     }
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 100; i++) {
         citys[i] = NULL;
     }
     int M = 0;
@@ -175,6 +175,7 @@ int main() {
         procress();
         lalala++;
     }
+	cin >> lalala;
     return 0;
 }
 
