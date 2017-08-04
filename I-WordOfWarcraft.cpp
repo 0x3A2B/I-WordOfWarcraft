@@ -1,4 +1,10 @@
-#include"stdafx.h"
+/****************************
+ 2017.8.3-2017.8.4
+ WYC and WAQ
+ :)
+ ****************************/
+
+//#include"stdafx.h"
 #include <iostream>
 #include <stdio.h>
 
@@ -178,48 +184,48 @@ void print(int mode, int city_no, int elements, \
 
     switch (mode) {
     case 1 :        //000:00 blue lion 1 born
-        printf("%03d:%d %s %s %d bron\n", \
+        printf("%03d:%02d %s %s %d bron\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1);
         break;
     case 2 :        //000:10 red iceman 1 marched to city 1 with 20 elements and force 30
-        printf("%03d:%d %s %s %d marched to city %d with %d elements and force %d\n", \
+        printf("%03d:%02d %s %s %d marched to city %d with %d elements and force %d\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1, city_no, elements_1, force_1);
         break;
     case 3:         //000:40 red iceman 1 attacked blue lion 1 in city 1 with 20 elements and force 30
-        printf("%03d:%d %s %s %d attacked %s %s %d in city %d with %d elements and force %d\n", \
+        printf("%03d:%02d %s %s %d attacked %s %s %d in city %d with %d elements and force %d\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1, commond[commond_type_2], kinght[kinght_type_2], kinght_no_2, city_no, elements_1, force_1);
         break;
     case 4:         //001:40 blue dragon 2 fought back against red lion 2 in city 1
-        printf("%03d:%d %s %s %d fought back against %s %s %d in city %d\n", \
+        printf("%03d:%02d %s %s %d fought back against %s %s %d in city %d\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1, commond[commond_type_2], kinght[kinght_type_2], kinght_no_2, city_no);
         break;
     case 5:         //001:40 red lion 2 was killed in city 1
-        printf("%03d:%d %s %s %d was killed in city %d\n", \
+        printf("%03d:%02d %s %s %d was killed in city %d\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1, city_no);
         break;
     case 6:         //003:40 blue dragon 2 yelled in city 4
-        printf("%03d:%d %s %s %d yelled in city %d\n", \
+        printf("%03d:%02d %s %s %d yelled in city %d\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1, city_no);
         break;
     case 7:         //001:40 blue dragon 2 earned 10 elements for his headquarter
-        printf("%03d:%d %s %s %d earned %d elements for his headquarter\n", \
+        printf("%03d:%02d %s %s %d earned %d elements for his headquarter\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1, elements);
         break;
     case 8:         //004:40 blue flag raised in city 4
-        printf("%03d:%d %s flag raised in city %d\n", \
+        printf("%03d:%02d %s flag raised in city %d\n", \
                h, Min, commond[commond_type_1], city_no);
         break;
     case 9:         //001:10 red iceman 1 reached blue headquarter with 20 elements and force 30
-        printf("%03d:%d %s %s %d reached %s headquarter with %d elements and force %d\n", \
+        printf("%03d:%02d %s %s %d reached %s headquarter with %d elements and force %d\n", \
                h, Min, commond[commond_type_1], kinght[kinght_type_1], kinght_no_1, commond[commond_type_2], elements_1, force_1);
         break;
     case 10:        //003:10 blue headquarter was taken
-        printf("%03d:%d %s headquarter was taken\n", \
+        printf("%03d:%02d %s headquarter was taken\n", \
                h, Min, commond[commond_type_1]);
         break;
     case 11:        //000:50 100 elements in red headquarter
         //000:50 120 elements in blue headquarter
-        printf("%03d:%d %d elements in red headquarter\n", \
+        printf("%03d:%02d %d elements in red headquarter\n", \
                h, Min, citys[0]->HEA);
         printf("%03d:%d %d elements in blue headquarter\n", \
                h, Min, citys[city_n + 1]->HEA);
@@ -229,32 +235,30 @@ void print(int mode, int city_no, int elements, \
 
 void procress() {
     time = 0;
-    int sum_kinght_r = 0, sum_kinght_b = 0;
+    int sum_kinght_r = 0, sum_kinght_b = 0, R_backup = 0, B_backup = 0;
     init();
-    int who_win[3][23];  //胜利计数 需要初始化
-    for (int i = 0; i < 23; i++) {
-        who_win[1][i] = 0;
-        who_win[2][i] = 0;
-    }
+	int who_win[3][23] = { 0 }, round_win[3][23] = { 0 };  //胜利计数 需要初始化
     //t = 0 ;
-    while (citys[0]->people < 2 && citys[city_n + 1]->people < 2) {
+    while (1/*citys[0]->people < 2 && citys[city_n + 1]->people < 2*/) {
         //t = 0
         bool r_flag = 0, b_flag = 0;
         int r_mem = 0, b_mem = 0;
-        if (citys[0]->HEA > HEA_init[red_list[time % 5] - 1]) {
+        if (citys[0]->HEA >= HEA_init[red_list[time % 5] - 1]) {
 			sum_kinght_r++;
             knights[1][sum_kinght_r] = new knight(sum_kinght_r, red_list[time % 5]);     //red bron
             citys[0]->HEA -= HEA_init[red_list[time % 5] - 1];
+			citys[0]->people++;
             print(1, NULL, NULL, \
                   red_list[time % 5], 1, sum_kinght_r, NULL, \
                   NULL, NULL, NULL, NULL, NULL, NULL );
 			
         }
-        if (citys[city_n + 1]->HEA > HEA_init[blue_list[time % 5] - 1]) {
+        if (citys[city_n + 1]->HEA >= HEA_init[blue_list[time % 5] - 1]) {
 			sum_kinght_b++;
             knights[2][sum_kinght_b] = new knight(sum_kinght_b, blue_list[time % 5]);     //blue bron
             knights[2][sum_kinght_b]->step = city_n + 1;
             citys[city_n + 1]->HEA -= HEA_init[blue_list[time % 5] - 1];
+			citys[city_n + 1]->people++;
             print(1, NULL, NULL, \
                   blue_list[time % 5], 2, sum_kinght_b, NULL, \
                   NULL, NULL, NULL, NULL, NULL, NULL ); 
@@ -340,7 +344,6 @@ void procress() {
         }
         if (citys[city_n + 1]->people == 2) {                       //被占领
             print(10, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-            //	print(11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             return;
         }
 
@@ -371,24 +374,78 @@ void procress() {
             }
         }
         time++;
-        //t = 4
-        for (int i = 1; i <= city_n; i++) {    //ririririririririririririri
+        //t = 4,攻击,收集,奖励,插旗模块
+		R_backup = citys[0]->HEA, B_backup = citys[city_n + 1]->HEA;
+        for (int i = 1; i <= city_n; i++) {
             int win_status = 0;
-            if (citys[i]->people == 2 && knights[1][citys[i]->red]->dead && knights[2][citys[i]->blue]->dead) {
+            if (citys[i]->people == 2 && \
+				knights[1][citys[i]->red]->dead && \
+				knights[2][citys[i]->blue]->dead) {
                 if (citys[i]->flag == 1 || ((i & 1) == 1)) {//攻击
                     win_status = knights[1][citys[i]->red]->attack(citys[i]->blue, 2);
+					
                 } else if (citys[i]->flag == 2 || ((i & 1) == 0)) {
                     win_status = knights[2][citys[i]->blue]->attack(citys[i]->red, 1);
                 }
-                //战死
-                //获得奖励
-                //插旗
+				//更新插旗与奖励标记,收集生命元,插旗判定
+				if (win_status == 1) {
+					who_win[1][i]++;
+					who_win[2][i] = 0;
+					round_win[1][citys[i]->red] = 1;
+					print(7, NULL, citys[i]->HEA,
+						  knights[1][citys[i]->red]->type, 1, knights[1][citys[i]->red]->NO, NULL, NULL,
+						  NULL, NULL, NULL, NULL, NULL);
+					citys[0]->HEA += citys[i]->HEA;
+					citys[i]->HEA = 0;
+
+					//
+					citys[i]->blue = 0;
+					citys[i]->people--;
 
 
+					if (who_win[1][i] == 2) print(8, i, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+				}
+				else if (win_status == 2) {
+					who_win[2][i]++;
+					who_win[1][i] = 0;
+					round_win[2][citys[i]->blue] = 1;
+					print(7, NULL, citys[i]->HEA,
+						  knights[2][citys[i]->blue]->type, 2, knights[2][citys[i]->blue]->NO, NULL, NULL,
+						  NULL, NULL, NULL, NULL, NULL);
+					citys[city_n + 1]->HEA += citys[i]->HEA;
+					citys[i]->HEA = 0;
+
+					//
+					citys[i]->red = 0;
+					citys[i]->people--;
+
+
+					if (who_win[2][i] == 2) print(8, i, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+				}
             }
         }
+		//奖励判定
+		for (int i = 1; i <= city_n; i++) {
+			if (round_win[1][i]) {
+				if (R_backup < 8) break;
+				knights[1][i]->HEA += 8;
+				citys[0]->HEA -= 8;
+				R_backup -= 8;
+			}
+		}
+		for (int i = city_n; i >=1; i--) {
+			if (round_win[2][i]) {
+				if (B_backup < 8) break;
+				knights[2][i]->HEA += 8;
+				citys[city_n+1]->HEA -= 8;
+				B_backup -= 8;
+			}
+		}
+		for (int i = 0; i < 3; i++) { //奖励标记初始化
+			for (int j = 0; j < 23; j++) round_win[i][j] = 0;
+		}
+		time++;
 
-        time++;
         //t = 5
         print(11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         time++;

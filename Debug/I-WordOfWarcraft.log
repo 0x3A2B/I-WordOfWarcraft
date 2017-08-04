@@ -1,4 +1,4 @@
 ﻿  I-WordOfWarcraft.cpp
-d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(139): warning C4715: “knight::attack”: 不是所有的控件路径都返回值
-  I-WordOfWarcraft.vcxproj -> D:\Dev\GitHub\I-WordOfWarcraft\Debug\I-WordOfWarcraft.exe
-  I-WordOfWarcraft.vcxproj -> D:\Dev\GitHub\I-WordOfWarcraft\Debug\I-WordOfWarcraft.pdb (Partial PDB)
+d:\github\i-wordofwarcraft\i-wordofwarcraft.cpp(139): warning C4715: “knight::attack”: 不是所有的控件路径都返回值
+  I-WordOfWarcraft.vcxproj -> D:\GitHub\I-WordOfWarcraft\Debug\I-WordOfWarcraft.exe
+  I-WordOfWarcraft.vcxproj -> D:\GitHub\I-WordOfWarcraft\Debug\I-WordOfWarcraft.pdb (Partial PDB)
