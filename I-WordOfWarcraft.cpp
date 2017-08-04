@@ -1,5 +1,7 @@
+#include"stdafx.h"
 #include <iostream>
 #include <stdio.h>
+
 
 using namespace std;
 
@@ -28,108 +30,108 @@ public:
     }
 };
 
-knight *knights[3][20] = {0};
-city   *citys[22] = {0};
+knight *knights[3][30] = {0};
+city   *citys[30] = {0};
 int city_n = 0, TIME = 0, time = 0;
-int HEA_init[5] = {0}, ATK_init[5] = {0};
+int HEA_init[7] = {0}, ATK_init[7] = {0};
 
 knight::knight(int n, int t) {
     NO = n;
     type = t;
-    HEA = HEA_init[n - 1];
-    ATK = ATK_init[n - 1];
+    HEA = HEA_init[t - 1];
+    ATK = ATK_init[t - 1];
 }
 
 int knight::attack(int n, int RorB) {
     int HEA_temp = 0; //战斗前生命值
-    switch(type) {
+    switch(this->type) {
     case 1:
     case 2:
     case 3://Dragon,Ninja,Iceman
         //主动攻击
-        print(3, step, NULL,
-              type, tool_qf(RorB), NO, HEA, ATK,
+        print(3, this->step, NULL,
+              this->type, tool_qf(RorB), this->NO, this->HEA, this->ATK,
               knights[RorB][n]->type, RorB, knights[RorB][n]->NO, knights[RorB][n]->HEA, knights[RorB][n]->ATK);
-        knights[RorB][n]->HEA -= ATK;
+        knights[RorB][n]->HEA -= this->ATK;
         if (knights[RorB][n]->HEA <= 0) {
             knights[RorB][n]->dead = 0;
-            kill_n++;
-            print(5, step, NULL, knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-            if(type == 1) print(6, step, NULL, type, tool_qf(RorB), NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL); //Dragon欢呼
-            if (knights[RorB][n]->type == 4) HEA += HEA_temp; //Lion奖励生命值
+			this->kill_n++;
+            print(5, this->step, NULL, knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            if(this->type == 1) print(6, this->step, NULL, this->type, tool_qf(RorB), this->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL); //Dragon欢呼
+            if (knights[RorB][n]->type == 4) this->HEA += HEA_temp; //Lion奖励生命值
             return tool_qf(RorB);
         } else {
             //反击
             HEA_temp = knights[RorB][n]->HEA;
             if (knights[RorB][n]->type != 2) {//Ninja不反击
-                print(4, step, NULL,
+                print(4, this->step, NULL,
                       knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL,
-                      type, tool_qf(RorB), NO, NULL, NULL);
-                HEA -= (knights[RorB][n]->ATK) / 2;
+					this->type, tool_qf(RorB), this->NO, NULL, NULL);
+				this->HEA -= (knights[RorB][n]->ATK) / 2;
             }
-            if (HEA <= 0) {
-                dead = 0;
-                print(5, step, NULL, type, tool_qf(RorB), NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            if (this->HEA <= 0) {
+				this->dead = 0;
+                print(5, this->step, NULL, this->type, tool_qf(RorB), this->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
                 return RorB;
             } else return 0;//双方均存活
         }
     case 4://Lion
         //主动攻击
         HEA_temp = HEA;
-        print(3, step, NULL,
-              type, tool_qf(RorB), NO, HEA, ATK,
+        print(3, this->step, NULL,
+			this->type, tool_qf(RorB), this->NO, this->HEA, this->ATK,
               knights[RorB][n]->type, RorB, knights[RorB][n]->NO, knights[RorB][n]->HEA, knights[RorB][n]->ATK);
-        knights[RorB][n]->HEA -= ATK;
+        knights[RorB][n]->HEA -= this->ATK;
         if (knights[RorB][n]->HEA <= 0) {
             knights[RorB][n]->dead = 0;
             kill_n++;
-            print(5, step, NULL, knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-            if (knights[RorB][n]->type == 4) HEA += HEA_temp; //Lion奖励生命值
+            print(5, this->step, NULL, knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            if (knights[RorB][n]->type == 4)this->HEA += HEA_temp; //Lion奖励生命值
             return tool_qf(RorB);
         } else {
             //反击
             HEA_temp = knights[RorB][n]->HEA;
             if (knights[RorB][n]->type != 2) {//Ninja不反击
-                print(4, step, NULL,
+                print(4, this->step, NULL,
                       knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL,
-                      type, tool_qf(RorB), NO, NULL, NULL);
-                HEA -= (knights[RorB][n]->ATK) / 2;
+					this->type, tool_qf(RorB), this->NO, NULL, NULL);
+				this->HEA -= (knights[RorB][n]->ATK) / 2;
             }
-            if (HEA <= 0) {
-                dead = 0;
-                print(5, step, NULL, type, tool_qf(RorB), NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            if (this->HEA <= 0) {
+				this->dead = 0;
+                print(5, this->step, NULL, this->type, tool_qf(RorB), this->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
                 knights[RorB][n]->HEA += HEA_temp; //反击被杀，奖励对手生命值
                 return RorB;
             } else return 0;//双方均存活
         }
     case 5://Wolf
-        print(3, step, NULL,
-              type, tool_qf(RorB), NO, HEA, ATK,
+        print(3, this->step, NULL,
+			this->type, tool_qf(RorB), this->NO, this->HEA, this->ATK,
               knights[RorB][n]->type, RorB, knights[RorB][n]->NO, knights[RorB][n]->HEA, knights[RorB][n]->ATK);
-        knights[RorB][n]->HEA -= ATK;
+        knights[RorB][n]->HEA -= this->ATK;
         if (knights[RorB][n]->HEA <= 0) {
             knights[RorB][n]->dead = 0;
-            kill_n++;
-            print(5, step, NULL, knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+			this->kill_n++;
+            print(5, this->step, NULL, knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             //生命攻击翻倍
             if (kill_n % 2 == 0) {
-                HEA = HEA * 2;
-                ATK = ATK * 2;
+				this->HEA = this->HEA * 2;
+				this->ATK = this->ATK * 2;
             }
-            if (knights[RorB][n]->type == 4) HEA += HEA_temp; //Lion奖励生命值
+            if (knights[RorB][n]->type == 4) this->HEA += HEA_temp; //Lion奖励生命值
             return tool_qf(RorB);
         } else {
             //反击
             HEA_temp = knights[RorB][n]->HEA;
             if (knights[RorB][n]->type != 2) {//Ninja不反击
-                print(4, step, NULL,
+                print(4, this->step, NULL,
                       knights[RorB][n]->type, RorB, knights[RorB][n]->NO, NULL, NULL,
-                      type, tool_qf(RorB), NO, NULL, NULL);
-                HEA -= (knights[RorB][n]->ATK) / 2;
+					this->type, tool_qf(RorB), this->NO, NULL, NULL);
+				this->HEA -= (knights[RorB][n]->ATK) / 2;
             }
-            if (HEA <= 0) {
-                dead = 0;
-                print(5, step, NULL, type, tool_qf(RorB), NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            if (this->HEA <= 0) {
+				this->dead = 0;
+                print(5, this->step, NULL, this->type, tool_qf(RorB), this->NO, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
                 return RorB;
             } else return 0;//双方均存活
         }
@@ -148,7 +150,7 @@ void init() {
     for (int i = 0; i < 5; i++) cin >> ATK_init[i];
 }
 
-int red_list[5] = { 1, 2, 3, 4, 5 }, blue_list[5] = { 2, 5, 4, 1, 3 };
+int red_list[5] = { 3, 4, 5, 2, 1 }, blue_list[5] = { 4, 1, 2, 3, 5 };
 void procress();
 
 int main() {
@@ -227,7 +229,7 @@ void print(int mode, int city_no, int elements, \
 
 void procress() {
     time = 0;
-    int sum_kinght = 0;
+    int sum_kinght_r = 0, sum_kinght_b = 0;
     init();
     int who_win[3][23];  //胜利计数 需要初始化
     for (int i = 0; i < 23; i++) {
@@ -240,45 +242,51 @@ void procress() {
         bool r_flag = 0, b_flag = 0;
         int r_mem = 0, b_mem = 0;
         if (citys[0]->HEA > HEA_init[red_list[time % 5] - 1]) {
-            knights[1][sum_kinght] = new knight(sum_kinght + 1, red_list[time % 5]);     //red bron
+			sum_kinght_r++;
+            knights[1][sum_kinght_r] = new knight(sum_kinght_r, red_list[time % 5]);     //red bron
             citys[0]->HEA -= HEA_init[red_list[time % 5] - 1];
             print(1, NULL, NULL, \
-                  red_list[time % 5], 1, sum_kinght + 1, NULL, \
+                  red_list[time % 5], 1, sum_kinght_r, NULL, \
                   NULL, NULL, NULL, NULL, NULL, NULL );
+			
         }
         if (citys[city_n + 1]->HEA > HEA_init[blue_list[time % 5] - 1]) {
-            knights[2][sum_kinght] = new knight(sum_kinght + 1, blue_list[time % 5]);     //blue bron
-            knights[2][sum_kinght]->step = city_n + 1;
+			sum_kinght_b++;
+            knights[2][sum_kinght_b] = new knight(sum_kinght_b, blue_list[time % 5]);     //blue bron
+            knights[2][sum_kinght_b]->step = city_n + 1;
             citys[city_n + 1]->HEA -= HEA_init[blue_list[time % 5] - 1];
             print(1, NULL, NULL, \
-                  blue_list[time % 5], 2, sum_kinght + 1, NULL, \
-                  NULL, NULL, NULL, NULL, NULL, NULL );
+                  blue_list[time % 5], 2, sum_kinght_b, NULL, \
+                  NULL, NULL, NULL, NULL, NULL, NULL ); 
         }
-        sum_kinght++;
+                                                                           //红蓝需要分开。ERROR
         time++;
         //t = 1
-        for (int i = 0; i < sum_kinght; i++) {
-            if (knights[1][i]->dead  && knights[1][i]->step <= city_n) {                             //Red Move
-                citys[knights[1][i]->step]->people--;
-                citys[knights[1][i]->step]->red = 0;
-                knights[1][i]->step++;
-                citys[knights[1][i]->step]->people++;
-                citys[knights[1][i]->step]->red = knights[1][i]->NO;
-                if (knights[1][i]->step == city_n + 1) {
-                    r_flag = 1;
-                    r_mem = knights[1][i]->NO;
-                }
-                if (knights[1][i]->type == 3 && (knights[1][i]->step & 1 == 0)) {                  //iceman加血
-                    if (knights[1][i]->HEA > 9) {
-                        knights[1][i]->HEA -= 9;
-                    } else {
-                        knights[1][i]->HEA = 1;
-                    }
-                    knights[1][i]->ATK += 20;
-                }
-            }
-
-            if (knights[2][i]->dead && knights[2][i]->step > 0) {                              //Blue Move
+		for (int i = 1; i <= sum_kinght_r; i++) {
+			if (knights[1][i]->dead  && (knights[1][i]->step <= city_n)) {                             //Red Move
+				citys[knights[1][i]->step]->people--;
+				citys[knights[1][i]->step]->red = 0;
+				knights[1][i]->step++;
+				citys[knights[1][i]->step]->people++;
+				citys[knights[1][i]->step]->red = knights[1][i]->NO;
+				if (knights[1][i]->step == city_n + 1) {
+					r_flag = 1;
+					r_mem = knights[1][i]->NO;
+				}
+				if (knights[1][i]->type == 3 && ((knights[1][i]->step & 1) == 0)) {                  //iceman加血
+					if (knights[1][i]->HEA > 9) {
+						knights[1][i]->HEA -= 9;
+					}
+					else {
+						knights[1][i]->HEA = 1;
+					}
+					knights[1][i]->ATK += 20;
+				}
+			}
+		}
+		//蓝循环
+		for (int i = 1; i <= sum_kinght_b; i++) {
+            if (knights[2][i]->dead && knights[2][i]->step > 0) {                                   //Blue Move
                 citys[knights[2][i]->step]->people--;
                 citys[knights[2][i]->step]->blue = 0;
                 knights[2][i]->step--;
@@ -289,7 +297,7 @@ void procress() {
                     b_mem = knights[2][i]->NO;
                 }
 
-                if (knights[2][i]->type == 3 && (knights[2][i]->step & 1 == 0)) {                  //iceman加血
+                if (knights[2][i]->type == 3 && ((knights[2][i]->step & 1) == 0)) {                  //iceman加血
                     if (knights[2][i]->HEA > 9) {
                         knights[2][i]->HEA -= 9;
                     } else {
@@ -308,7 +316,6 @@ void procress() {
         }
         if (citys[0]->people == 2) {                //被占领
             print(10, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-            //	print(11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             return;
         }
 
@@ -349,7 +356,7 @@ void procress() {
                 if (citys[i]->red) {
                     citys[city_n + 1]->HEA += citys[i]->HEA;
                     print(7, i, citys[i]->HEA, \
-                          knights[1][citys[i]->blue]->type, 1, knights[1][citys[i]->blue]->NO, NULL, NULL, \
+                          knights[1][citys[i]->red]->type, 1, knights[1][citys[i]->red]->NO, NULL, NULL, \
                           NULL, NULL, NULL, NULL, NULL);
                     citys[i]->HEA = 0;
                 }
@@ -367,11 +374,11 @@ void procress() {
         //t = 4
         for (int i = 1; i <= city_n; i++) {    //ririririririririririririri
             int win_status = 0;
-            if (citys[i]->people == 2) {
-                if (citys[i]->flag == 1 || (i & 1 == 1)) {//攻击
+            if (citys[i]->people == 2 && knights[1][citys[i]->red]->dead && knights[2][citys[i]->blue]->dead) {
+                if (citys[i]->flag == 1 || ((i & 1) == 1)) {//攻击
                     win_status = knights[1][citys[i]->red]->attack(citys[i]->blue, 2);
-                } else if (citys[i]->flag == 2 || (i & 1 == 0)) {
-                    win_status = knights[2][citys[i]->red]->attack(citys[i]->red, 1);
+                } else if (citys[i]->flag == 2 || ((i & 1) == 0)) {
+                    win_status = knights[2][citys[i]->blue]->attack(citys[i]->red, 1);
                 }
                 //战死
                 //获得奖励

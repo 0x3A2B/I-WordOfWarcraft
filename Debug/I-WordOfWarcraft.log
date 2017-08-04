@@ -1,5 +1,4 @@
 ﻿  I-WordOfWarcraft.cpp
-d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(210): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
-d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(247): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
-d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(345): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
-d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(348): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+d:\dev\github\i-wordofwarcraft\i-wordofwarcraft.cpp(139): warning C4715: “knight::attack”: 不是所有的控件路径都返回值
+  I-WordOfWarcraft.vcxproj -> D:\Dev\GitHub\I-WordOfWarcraft\Debug\I-WordOfWarcraft.exe
+  I-WordOfWarcraft.vcxproj -> D:\Dev\GitHub\I-WordOfWarcraft\Debug\I-WordOfWarcraft.pdb (Partial PDB)
